@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invitación Especial</title>
+  <style>
+    :root {
+      --primary: #c9184a;
+      --primary-hover: #a4133c;
+      --bg: #fff0f3;
+      --card-bg: #ffffff;
+      --text: #2b2d42;
+      --text-muted: #595f6c;
+      --selected-bg: #ffccd5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 100%);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      max-width: 400px;
+      width: 100%;
+      border-radius: 24px;
+      padding: 36px 26px;
+      box-shadow: 0 16px 36px rgba(164, 19, 60, 0.12);
+      text-align: center;
+    }
+
+    .icon {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .message {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 28px;
+    }
+
+    .options-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+
+    .option-btn {
+      background: #fdf0f2;
+      border: 2px solid transparent;
+      border-radius: 14px;
+      padding: 16px 20px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-align: center;
+    }
+
+    .option-btn:hover {
+      background: #fcd5dc;
+      border-color: #ff8fa3;
+    }
+
+    .option-btn.selected {
+      border-color: var(--primary);
+      background: var(--selected-bg);
+      color: var(--primary-hover);
+      transform: scale(1.02);
+    }
+
+    .action-btn {
+      width: 100%;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      padding: 16px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(201, 24, 74, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .action-btn:disabled {
+      background: #e0e0e0;
+      color: #9e9e9e;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .action-btn:not(:disabled):active {
+      transform: scale(0.98);
+      background: var(--primary-hover);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <span class="icon">💌</span>
+    <h1>Corazón</h1>
+    <p class="message">
+      Te invito formalmente a cenar y pasar el tiempo conmigo, seleccione algunas opciones cerca de Anahuac elige a donde quieres ir.
+    </p>
+
+    <div class="options-container">
+      <button class="option-btn" onclick="selectPlace(this, 'Holy Cow')">
+        Holy Cow (restaurante)
+      </button>
+      
+      <button class="option-btn" onclick="selectPlace(this, 'Napoli')">
+        Napoli (restaurante)
+      </button>
+
+      <button class="option-btn" onclick="selectPlace(this, 'Moracuya')">
+        Moracuya (cafetería)
+      </button>
+
+      <button class="option-btn" onclick="selectPlace(this, 'Mía Morena')">
+        Mía Morena (cafetería)
+      </button>
+    </div>
+
+    <!-- Reemplaza el número 5281XXXXXXXX por tu número con lada si quieres que te mande WhatsApp -->
+    <button id="sendBtn" class="action-btn" disabled onclick="sendResponse()">
+      Elige una opción
+    </button>
+  </div>
+
+  <script>
+    let selectedOption = "";
+    const TU_NUMERO_WHATSAPP = "528126131841"; 
+
+    function selectPlace(button, placeName) {
+      document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+      button.classList.add('selected');
+      selectedOption = placeName;
+
+      const sendBtn = document.getElementById('sendBtn');
+      sendBtn.disabled = false;
+      sendBtn.textContent = `¡Vamos a ${placeName}!`;
+    }
+
+    function sendResponse() {
+      if (!selectedOption) return;
+
+      const mensaje = `Acepto, vamos a ${selectedOption} el viernes`;
+      const url = `https://wa.me/${TU_NUMERO_WHATSAPP}?text=${encodeURIComponent(mensaje)}`;
+      
+      window.open(url, '_blank');
+    }
+  </script>
+
+</body>
+</html>
